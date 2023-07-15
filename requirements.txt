@@ -1,0 +1,6 @@
+aiohttp==3.8.4
+asqlite @ git+https://github.com/Rapptz/asqlite.git@ed54062e35acb5d0fe73bf536fc9dd6f22886950
+sse-starlette==1.6.1
+starlette==0.30.0
+twitchio @ git+https://github.com/PythonistaGuild/TwitchIO.git@fix/routines#egg=twitchio
+uvicorn==0.22.0
