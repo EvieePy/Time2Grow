@@ -1,3 +1,10 @@
+/* CHANGE THIS TO ADJUST SIZE OF EVERYTHING IN PLANT DISPLAY */
+/* 1 == No Change, 2 == Double Size, etc etc... */
+:root {
+    --zoom: 1.25;
+}
+
+
 body, html {
     padding: 0;
     margin: 0;
@@ -27,6 +34,7 @@ body, html {
     position: relative;
     width: 8rem;
     height: 9rem;
+    zoom: var(--zoom);
 }
 
 .plantImg {
@@ -80,6 +88,34 @@ body, html {
     top: -4rem;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+.plantGlasses {
+    height: 1.5rem;
+    width: 6rem;
+    position: absolute;
+    z-index: 4;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.plantSpeech {
+    height: 4rem;
+    width: auto;
+    position: absolute;
+    z-index: 6;
+    top: -5rem;
+    right: 0;
+}
+
+.plantMedal {
+    height: 2rem;
+    width: auto;
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    right: 0;
 }
 
 .username {
