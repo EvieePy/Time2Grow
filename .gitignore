@@ -162,6 +162,9 @@ cython_debug/
 
 # Config
 config.toml
+config.json
 
-
+# Database
 database/database.db
+database/database.db-shm
+database/database.db-wal
