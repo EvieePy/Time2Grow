@@ -44,7 +44,7 @@ class Bot(commands.Bot):
         self.server = server
         self.database = database
 
-        self.plants: dict[str, Plant] = {'xmetrix': Plant("xmetrix", database=self.database, top=1)}
+        self.plants: dict[str, Plant] = {}
         self._previous_dispatch: list[dict[str, Any]] = []
 
         self.game_loop.start()
@@ -81,7 +81,7 @@ class Bot(commands.Bot):
         self.dispatch()
 
     def plants_to_json(self) -> list[dict[str, Any]]:
-        return [p.as_dict() for p in self.plants.values()]
+        return list(reversed([p.as_dict() for p in self.plants.values()]))
 
     def dispatch(self, data: dict[str, Any] | None = None):
         if not data:
