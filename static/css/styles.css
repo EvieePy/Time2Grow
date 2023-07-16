@@ -21,12 +21,13 @@ body, html {
     height: 100vh;
     flex-direction: column;
     justify-content: flex-end;
+    overflow: hidden;
 }
 
 .plantSection {
-    display: grid;
-    grid-auto-flow: column;
-    direction: ltr;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
     justify-content: center;
     gap: 2rem;
     padding: 2rem;
