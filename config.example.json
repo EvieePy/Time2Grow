@@ -1,0 +1,47 @@
+{
+  "BOT": {
+    "//comment": "The settings to setup the bot...",
+    "token": "",
+    "prefix": "?",
+    "channels": [""]
+  },
+
+  "LOGGING": {
+    "//comment": "10=DEBUG, 20=INFO, 30=WARNING, 40=ERROR, 50=CRITICAL",
+    "level": 20
+
+  },
+
+  "GAME": {
+    "//comment": "The settings to control the game: ticks == minutes in each cycle.",
+    "available": 12,
+    "ticks": 6,
+    "death_cycle": 4,
+    "growth_cycles": 10,
+    "water_cycle": 2,
+    "glasses_minutes": 2,
+    "reverse_attack_chance": 10,
+    "attacks": [
+      "ultimate punch",
+      "kamehameha",
+      "hundred violent slaps",
+      "dance of the giant flying squirrel",
+      "X, L1, UP, SQUARE, DOWN, X, L2, TRIANGLE, DOWN, R1, L1, L1"
+    ],
+    "woops": [
+      "tripped over",
+      "fell down a hole",
+      "was drunk",
+      "spontaneously combusted",
+      "got called down for dinner"
+    ]
+  },
+
+  "COOLDOWNS": {
+    "//comment": "Cooldowns of the commands as minutes...",
+    "plant": 12,
+    "water": 6,
+    "attack": 12,
+    "thug": 12
+  }
+}
