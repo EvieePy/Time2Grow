@@ -30,13 +30,14 @@ from typing import TYPE_CHECKING, Any, AsyncGenerator
 import aiohttp
 from sse_starlette import EventSourceResponse
 from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response, HTMLResponse
+from starlette.responses import HTMLResponse, JSONResponse, Response
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
+
 
 if TYPE_CHECKING:
     from .bot import Bot
@@ -46,16 +47,20 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Server(Starlette):
-
     def __init__(self) -> None:
         self.bot: Bot | None = None
 
         routes: list[Route] = [
-            Route('/event', self.event_endpoint, methods=['GET']),
-            Mount('/', app=StaticFiles(directory='static', html=True), name="static"),
+            Route("/event", self.event_endpoint, methods=["GET"]),
+            Mount("/", app=StaticFiles(directory="static", html=True), name="static"),
         ]
         middleware: list[Middleware] = [
-            Middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'], allow_headers=['*']),
+            Middleware(
+                CORSMiddleware,
+                allow_origins=["*"],
+                allow_methods=["*"],
+                allow_headers=["*"],
+            ),
         ]
 
         super().__init__(routes=routes, middleware=middleware)
@@ -79,7 +84,7 @@ class Server(Starlette):
         queue: asyncio.Queue = self.listeners[identifier]
 
         if self.bot:
-            initial = json.dumps({'event': None, 'plants': self.bot.plants_to_json()})
+            initial = json.dumps({"event": None, "plants": self.bot.plants_to_json()})
             yield initial
 
         while True:
