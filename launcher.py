@@ -29,22 +29,13 @@ import core
 import time2grow
 
 
-async def setup_database(pool: asqlite.Pool) -> None:
-
-    async with pool.acquire() as connection:
-        with open('database/SCHEMA.sql', 'r') as schema:
-            await connection.executescript(schema.read())
-
-    time2grow.logger.info('Successfully setup the database.')
-
-
 async def main() -> None:
-    async with asqlite.create_pool('database/database.db') as pool:
-        pool: asqlite.Pool
-        await setup_database(pool)
+    async with asqlite.create_pool("database/database.db") as pool:
+        database: time2grow.Database = time2grow.Database(pool)
+        await database.setup()
 
         app: time2grow.Server = time2grow.Server()
-        bot: time2grow.Bot = time2grow.Bot(server=app, pool=pool)
+        bot: time2grow.Bot = time2grow.Bot(server=app, database=database)
 
         app.bot = bot
 
