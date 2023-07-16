@@ -118,7 +118,7 @@ class Plant:
         if self.wilted:
             await self.database.update_stats(self.username, wilted=1)
 
-        if random.randint(0, 100) > 90 and not self.speech:
+        if random.randint(0, 100) > 90 and not self.speech and not attacked:
             self.speech = random.randint(1, 3)
             self.speech_on = self.total
 

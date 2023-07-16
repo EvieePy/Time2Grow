@@ -4,6 +4,7 @@ const event = new EventSource('http://localhost:8000/event');
 event.onmessage = (event) => {
     const data = JSON.parse(event.data);
     const plants = data["plants"];
+    const extra = data["extra"];
 
     // console.log(plants);
 
@@ -54,7 +55,11 @@ event.onmessage = (event) => {
             glassesImg = `<img class="plantGlasses" src="../images/glasses.png">`
         }
 
-        if (plant["speech"]) {
+        if (extra && extra["event"] === "attacked" && extra["reversed"] && extra["attacker"] === plant["username"]) {
+            speechImg = `<img class="plantSpeech" src="../images/speech/win.png">`
+        }
+
+        else if (plant["speech"]) {
             speechImg = `<img class="plantSpeech" src="../images/speech/${plant["speech"]}.png">`
         }
 

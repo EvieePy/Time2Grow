@@ -44,7 +44,7 @@ class Bot(commands.Bot):
         self.server = server
         self.database = database
 
-        self.plants: dict[str, Plant] = {}
+        self.plants: dict[str, Plant] = {'xmetrix': Plant("xmetrix", database=self.database, top=1)}
         self._previous_dispatch: list[dict[str, Any]] = []
 
         self.game_loop.start()
@@ -155,7 +155,7 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, thugged=1)
 
     @commands.command()
-    @commands.cooldown(1, core.config["COOLDOWNS"]["attack"], commands.Bucket.user)
+    @commands.cooldown(1, 1, commands.Bucket.user)
     async def attack(self, ctx: commands.Context, *, recipient: str = "") -> None:
         username: str = ctx.author.name
         recipient = recipient.lower()
@@ -177,6 +177,8 @@ class Bot(commands.Bot):
             await ctx.send(f"{username} attacked a thirsty plant. They felt bad and went to bed crying BibleThump")
             return
 
+        reversed_: bool = False
+
         attack: str = random.choice(core.config["GAME"]["attacks"])
         if username not in self.plants:
             await ctx.send(f"{username} used {attack} on {recipient}, it did something.")
@@ -185,6 +187,7 @@ class Bot(commands.Bot):
         else:
             outcome: int = random.randint(0, core.config["GAME"]["reverse_attack_chance"])
             if outcome == 0:
+                reversed_ = True
                 attacker_plant: Plant = self.plants[username]
 
                 woops: str = random.choice(core.config["GAME"]["woops"])
@@ -204,6 +207,7 @@ class Bot(commands.Bot):
                     "event": "attacked",
                     "attacker": username,
                     "recipient": recipient,
+                    "reversed": reversed_
                 }
             }
         )
