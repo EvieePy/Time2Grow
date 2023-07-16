@@ -54,16 +54,8 @@ class Server(Starlette):
             Route("/event", self.event_endpoint, methods=["GET"]),
             Mount("/", app=StaticFiles(directory="static", html=True), name="static"),
         ]
-        middleware: list[Middleware] = [
-            Middleware(
-                CORSMiddleware,
-                allow_origins=["*"],
-                allow_methods=["*"],
-                allow_headers=["*"],
-            ),
-        ]
 
-        super().__init__(routes=routes, middleware=middleware)
+        super().__init__(routes=routes)
         self.listeners: dict[str, asyncio.Queue] = {}
 
     def dispatch(self, data: dict[str, Any]) -> None:

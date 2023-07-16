@@ -1,4 +1,4 @@
-const event = new EventSource('http://localhost:8000/event');
+const event = new EventSource('/event');
 
 
 event.onmessage = (event) => {
