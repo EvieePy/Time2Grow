@@ -20,6 +20,7 @@
   "GAME": {
     "//comments": [
       "The settings to control the game...",
+      "available == The amount of plants that can be bought. !!NOTE: 10 is the best for current CSS settings.!!",
       "ticks == minutes in each cycle. Can not be lower than 1",
       "death_cycle == the cycle death occurs.",
       "growth_cycles == the amount of cycles this plant grows. !!Currently if you change this the game breaks :(!!",
@@ -29,7 +30,7 @@
       "attacks == a list of attacks that is randomly chosen when attacking.",
       "woops == a list of events that happened when an attack is reversed that is randomly chosen."
     ],
-    "available": 12,
+    "available": 10,
     "ticks": 6,
     "death_cycle": 4,
     "growth_cycles": 10,
