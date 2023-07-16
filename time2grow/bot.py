@@ -53,7 +53,7 @@ class Bot(commands.Bot):
         super().__init__(
             token=config["token"],
             prefix=config["prefix"],
-            initial_channels=config["channels"],
+            initial_channels=[config["channel"]],
         )
 
     async def event_command_error(self, context: commands.Context, error: commands.TwitchCommandError) -> None:

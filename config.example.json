@@ -1,9 +1,14 @@
 {
   "BOT": {
-    "//comment": "The settings to setup the bot...",
+    "//comment": [
+      "The settings to setup the bot...",
+      "token == The bots IRC token. Advisable to also moderate the bot for this.",
+      "prefix == The bots chat command prefix, E.g. ? == ?water",
+      "channel == The channel this bot will play the overlay in."
+    ],
     "token": "",
     "prefix": "?",
-    "channels": [""]
+    "channel": ""
   },
 
   "LOGGING": {
@@ -13,7 +18,17 @@
   },
 
   "GAME": {
-    "//comment": "The settings to control the game: ticks == minutes in each cycle.",
+    "//comments": [
+      "The settings to control the game...",
+      "ticks == minutes in each cycle. Can not be lower than 1",
+      "death_cycle == the cycle death occurs.",
+      "growth_cycles == the amount of cycles this plant grows. !!Currently if you change this the game breaks :(!!",
+      "water_cycle == the amount of cycles watering takes a plant backwards.",
+      "glasses_minutes == the amount of minutes the thug command is in effect for.",
+      "reverse_attack_chance == The chance of an attack being reversed: 1 out of x. Default is 1 out of 10 chance.",
+      "attacks == a list of attacks that is randomly chosen when attacking.",
+      "woops == a list of events that happened when an attack is reversed that is randomly chosen."
+    ],
     "available": 12,
     "ticks": 6,
     "death_cycle": 4,
