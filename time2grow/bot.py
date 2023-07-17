@@ -155,7 +155,7 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, thugged=1)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.Bucket.user)
+    @commands.cooldown(1, core.config["COOLDOWNS"]["attack"], commands.Bucket.user)
     async def attack(self, ctx: commands.Context, *, recipient: str = "") -> None:
         username: str = ctx.author.name
         recipient = recipient.lower()
