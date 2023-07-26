@@ -85,6 +85,10 @@ class Plant:
             self.watered_on = self.total
             self.watering = True
             self.wilted = False
+        elif glasses:
+            self.glasses_on = self.total
+            self.glasses = True
+            return
         elif attacked:
             self._loops = (DEATH * TICKS) - TICKS
             self.state = DEATH - 1
@@ -92,10 +96,6 @@ class Plant:
             self.total += 1
             self._loops += 1
             await self.database.update_stats(self.username, minutes=1)
-
-        if glasses:
-            self.glasses_on = self.total
-            self.glasses = True
 
         if self.glasses_on + GLASSES < self.total:
             self.glasses = False
