@@ -2,11 +2,16 @@
 /* 1 == No Change, 2 == Double Size, etc etc... */
 
 /* CHANGE --background FOR EASIER TESTING. SHOULD BE transparent FOR OBS. */
+
+/* CHANGE --plant-background FOR DIFFERENT COLOURS BEHIND PLANTS:: USE rgba() FOR TRANSPARENCY CONTROLS */
+
+
 :root {
     --zoom: 1.25;
     --background: transparent;
-}
 
+    --plant-background: rgba(255, 255, 255, 0);
+}
 
 body, html {
     padding: 0;
@@ -39,6 +44,20 @@ body, html {
     width: 8rem;
     height: 9rem;
     zoom: var(--zoom);
+}
+
+.plantContainer::after {
+    content: '';
+    background-color: var(--plant-background);
+    border-radius: 35% 35% 0 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .plantImg {
