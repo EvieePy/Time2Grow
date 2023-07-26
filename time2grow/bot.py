@@ -97,7 +97,7 @@ class Bot(commands.Bot):
         print(f"Logged in: {self.nick}")
 
     @commands.command()
-    @commands.cooldown(1, core.config["COOLDOWNS"]["plant"], commands.Bucket.user)
+    @commands.cooldown(1, core.config["COOLDOWNS"]["plant"] * 60, commands.Bucket.user)
     async def plant(self, ctx: commands.Context) -> None:
         if len(self.plants) == core.config["GAME"]["available"]:
             await ctx.send("Plant house is full... Buy plant when plant house not full!")
@@ -115,7 +115,7 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, planted=1)
 
     @commands.command()
-    @commands.cooldown(1, core.config["COOLDOWNS"]["water"], commands.Bucket.user)
+    @commands.cooldown(1, core.config["COOLDOWNS"]["water"] * 60, commands.Bucket.user)
     async def water(self, ctx: commands.Context) -> None:
         username: str = ctx.author.name
 
@@ -135,7 +135,7 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, watered=1)
 
     @commands.command()
-    @commands.cooldown(1, core.config["COOLDOWNS"]["thug"], commands.Bucket.user)
+    @commands.cooldown(1, core.config["COOLDOWNS"]["thug"] * 60, commands.Bucket.user)
     async def thug(self, ctx: commands.Context) -> None:
         username: str = ctx.author.name
 
@@ -155,7 +155,7 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, thugged=1)
 
     @commands.command()
-    @commands.cooldown(1, core.config["COOLDOWNS"]["attack"], commands.Bucket.user)
+    @commands.cooldown(1, core.config["COOLDOWNS"]["attack"] * 60, commands.Bucket.user)
     async def attack(self, ctx: commands.Context, *, recipient: str = "") -> None:
         username: str = ctx.author.name
         recipient = recipient.lower()
