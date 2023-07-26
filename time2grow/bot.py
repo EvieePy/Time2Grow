@@ -158,7 +158,7 @@ class Bot(commands.Bot):
     @commands.cooldown(1, core.config["COOLDOWNS"]["attack"] * 60, commands.Bucket.user)
     async def attack(self, ctx: commands.Context, *, recipient: str = "") -> None:
         username: str = ctx.author.name
-        recipient = recipient.lower()
+        recipient = recipient.lower().removeprefix('@')
 
         if recipient not in self.plants:
             await ctx.send(f"{username} used their most special attack on the wind... It did nothing!")
