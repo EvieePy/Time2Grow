@@ -49,6 +49,8 @@ GLASSES: int = core.config["GAME"]["glasses_minutes"]
 if GLASSES < 0:
     raise RuntimeError("GAME glasses_cycle must not be negative.")
 
+SPEECH_CHANCE: int = core.config["GAME"]["speech_chance"]
+
 
 class Plant:
     def __init__(self, username: str, /, *, database: Database, top: int) -> None:
@@ -118,7 +120,7 @@ class Plant:
         if self.wilted:
             await self.database.update_stats(self.username, wilted=1)
 
-        if random.randint(0, 200) == 200 and not self.speech and not attacked:
+        if random.randint(0, SPEECH_CHANCE) == SPEECH_CHANCE and not self.speech and not attacked:
             self.speech = random.randint(1, 3)
             self.speech_on = self.total
 

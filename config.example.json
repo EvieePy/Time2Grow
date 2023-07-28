@@ -27,6 +27,7 @@
       "water_cycle == the amount of cycles watering takes a plant backwards.",
       "glasses_minutes == the amount of minutes the thug command is in effect for.",
       "reverse_attack_chance == The chance of an attack being reversed: 1 out of x. Default is 1 out of 10 chance.",
+      "speech_chance == The chance as a fraction that a speech bubble will appear.",
       "attacks == a list of attacks that is randomly chosen when attacking.",
       "woops == a list of events that happened when an attack is reversed that is randomly chosen."
     ],
@@ -37,6 +38,7 @@
     "water_cycle": 2,
     "glasses_minutes": 2,
     "reverse_attack_chance": 10,
+    "speech_chance": 100,
     "attacks": [
       "ultimate punch",
       "kamehameha",
