@@ -14,6 +14,7 @@ event.onmessage = (event) => {
 
     for (let plant of plants) {
         let username = plant["username"];
+        let plantType = plant["plant_type"];
         let growthNum = Math.min(plant["growth"], 4);
         let flareNum = Math.min((plant["growth"] - growthNum) - 1, 4);
 
@@ -27,7 +28,7 @@ event.onmessage = (event) => {
         let medalImg = '';
 
         if (plant["wilted"]) {
-            plantImg = '../images/plants/wilted.png'
+            plantImg = `../images/plants/${plantType}/wilted.png`
             waterImg = `<img class="plantWater" src='../images/water.png'>`
         }
 
@@ -36,7 +37,7 @@ event.onmessage = (event) => {
         }
 
         else {
-            plantImg = `../images/plants/${growthNum}.png`
+            plantImg = `../images/plants/${plantType}/${growthNum}.png`
         }
 
         if (flareNum >= 0) {
@@ -49,6 +50,10 @@ event.onmessage = (event) => {
 
         if (plant["watering"]) {
             rainImg = `<img class="plantRain" src='../images/rain.gif'>`
+        }
+
+        if (plant["blood_rain"]) {
+            rainImg = `<img class="plantRain" src='../images/blood.gif'>`
         }
 
         if (plant["glasses"]) {
