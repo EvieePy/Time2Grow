@@ -96,7 +96,6 @@ class Bot(commands.Bot):
     async def event_ready(self) -> None:
         print(f"Logged in: {self.nick}")
 
-
     @commands.command()
     @commands.cooldown(1, core.config["COOLDOWNS"]["plant"] * 60, commands.Bucket.user)
     async def plant(self, ctx: commands.Context) -> None:
@@ -114,7 +113,6 @@ class Bot(commands.Bot):
 
         self.dispatch({"extra": {"event": "create", "username": username}})
         await self.database.update_stats(username, planted=1)
-
 
     @commands.command()
     @commands.cooldown(1, core.config["COOLDOWNS"]["eclipse"] * 60, commands.Bucket.user)
@@ -261,31 +259,3 @@ class Bot(commands.Bot):
         )
         await self.database.update_stats(recipient, victim=1)
         await self.database.update_stats(username, sabotaged=1)
-
-    # @commands.command()
-    # async def debug(self, ctx: commands.Context, *, params: str = "") -> None:
-    #     params = params.split(' ')
-    #     subcommand = params[0] if len(params) > 0 else ""
-    #     data = params[1] if len(params) > 1 else ""
-    #     if subcommand == "next":
-    #         username: str = ctx.author.name if data == "" else data
-    #         plant: Plant = self.plants[username]
-    #         plant.growth += 1
-    #         self.dispatch()
-    #     if subcommand == "fake":
-    #         username: str = ctx.author.name if data == "fake_user" else data
-    #         self.plants[username] = Plant(username, database=self.database, top=len(self.plants) + 1)
-    #         await ctx.send(f"{username} planted a plant in the plant house SeemsGood")
-    #
-    #         self.dispatch({"extra": {"event": "create", "username": username}})
-    #         await self.database.update_stats(username, planted=1)
-    #     if subcommand == "kill":
-    #         username: str = ctx.author.name if data == "" else data
-    #         del self.plants[username]
-    #     if subcommand == "wilt":
-    #         username: str = ctx.author.name if data == "" else data
-    #         plant: Plant = self.plants[username]
-    #         plant.state = DEATH - 1
-    #         self.dispatch()
-
-
