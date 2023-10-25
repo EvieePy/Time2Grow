@@ -39,7 +39,7 @@ async def main() -> None:
 
         app.bot = bot
 
-        config: uvicorn.Config = uvicorn.Config(app, port=8000)
+        config: uvicorn.Config = uvicorn.Config(app, host='0.0.0.0', port=8000)
         server: uvicorn.Server = uvicorn.Server(config)
 
         asyncio.create_task(bot.start())

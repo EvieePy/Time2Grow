@@ -20,6 +20,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import copy
 import datetime
 import logging
 import random
@@ -33,8 +34,7 @@ import core
 
 from .api import Server
 from .database import Database
-from .plant import Plant
-
+from .plant import Plant, PlantType
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -115,6 +115,48 @@ class Bot(commands.Bot):
         await self.database.update_stats(username, planted=1)
 
     @commands.command()
+    @commands.cooldown(1, core.config["COOLDOWNS"]["eclipse"] * 60, commands.Bucket.user)
+    async def eclipse(self, ctx: commands.Context) -> None:
+        username: str = ctx.author.name
+
+        if username not in self.plants:
+            await ctx.send("A cosmic ray hits the ground, and nothing happened, cause you don't have a plant")
+            return
+
+        plant: Plant = self.plants[username]
+        if plant.dead:
+            await ctx.send("Your plant is dead RIP. Buy a new one.")
+            return
+
+        await ctx.send(f"{username}, your plant has been hit by a cosmic ray and mutated!! MyAvatar")
+        plant.plant_type = PlantType.AUDREY
+        self.dispatch({"extra": {"event": "eclipse", "username": username}})
+
+    @commands.command()
+    @commands.cooldown(1, core.config["COOLDOWNS"]["blood"] * 60, commands.Bucket.user)
+    async def blood(self, ctx: commands.Context) -> None:
+        username: str = ctx.author.name
+
+        if username not in self.plants:
+            await ctx.send("You have spilled blood for nothing... Buy a plant FamilyMan")
+            return
+
+        plant: Plant = self.plants[username]
+        if plant.dead:
+            await ctx.send("Your plant is dead RIP. Buy a new one.")
+            return
+
+        if plant.plant_type == PlantType.BASIC:
+            await ctx.send("Your plant would not like the taste of blood.  Maybe an unexpected '?eclipse' would change their thirst...")
+            return
+
+        await ctx.send(f"{username} makes a sacrifice to feed his carnivorous plant MyAvatar")
+        await plant.update(blood=True)
+
+        self.dispatch({"extra": {"event": "water", "username": username}})
+        await self.database.update_stats(username, watered=1)
+
+    @commands.command()
     @commands.cooldown(1, core.config["COOLDOWNS"]["water"] * 60, commands.Bucket.user)
     async def water(self, ctx: commands.Context) -> None:
         username: str = ctx.author.name
@@ -126,6 +168,10 @@ class Bot(commands.Bot):
         plant: Plant = self.plants[username]
         if plant.dead:
             await ctx.send("Your plant is dead RIP. Buy a new one.")
+            return
+
+        if plant.plant_type == PlantType.AUDREY:
+            await ctx.send("An Audrey II requires more sustenance than water can provide...")
             return
 
         await ctx.send(f"{username} watered their plant MyAvatar")

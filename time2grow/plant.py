@@ -25,7 +25,7 @@ import random
 from typing import Any
 
 import core
-
+from enum import Enum
 from .database import Database
 
 
@@ -51,6 +51,9 @@ if GLASSES < 0:
 
 SPEECH_CHANCE: int = core.config["GAME"]["speech_chance"]
 
+class PlantType(Enum):
+    BASIC = 'basic',
+    AUDREY = 'audrey'
 
 class Plant:
     def __init__(self, username: str, /, *, database: Database, top: int) -> None:
@@ -61,6 +64,7 @@ class Plant:
         self.total: int = 0
         self._loops: int = 0
 
+        self.plant_type: PlantType = PlantType.BASIC
         self.state: int = 0  # 0 == fully watered, DEATH == dead
         self.growth: int = 0  # 0 == baby, GROWTH - 1 == Epic
 
@@ -70,6 +74,7 @@ class Plant:
 
         self.watering: bool = False
         self.watered_on: int = 0
+        self.blood_rain: bool = False
 
         self.glasses: bool = False
         self.glasses_on: int = 0
@@ -80,12 +85,15 @@ class Plant:
         self.top = top
         self.created: datetime.datetime = datetime.datetime.now()
 
-    async def update(self, water: bool = False, glasses: bool = False, attacked: bool = False) -> None:
-        if water:
+    async def update(self, water: bool = False, blood: bool = False, glasses: bool = False, attacked: bool = False) -> None:
+        if water or blood:
             self._loops = max(self._loops - (TICKS * WATER), 0)
             self.state = max(self.state - WATER, 0)
             self.watered_on = self.total
-            self.watering = True
+            if water:
+                self.watering = True
+            if blood:
+                self.blood_rain = True
             self.wilted = False
         elif glasses:
             self.glasses_on = self.total
@@ -104,6 +112,7 @@ class Plant:
 
         if self.watered_on < self.total:
             self.watering = False
+            self.blood_rain = False
 
         self.state = int(self._loops / TICKS if self._loops % TICKS == 0 else self.state)
         if self.state == DEATH:
@@ -140,6 +149,7 @@ class Plant:
     def as_dict(self) -> dict[str, Any]:
         data = {
             "username": self.username,
+            "plant_type": self.plant_type.value,
             "state": self.state,
             "growth": self.growth,
             "total": self.total,
@@ -147,6 +157,7 @@ class Plant:
             "dead": self.dead,
             "maxed": self.maxed,
             "watering": self.watering,
+            "blood_rain": self.blood_rain,
             "glasses": self.glasses,
             "speech": self.speech,
             "top": self.top,
